@@ -10,6 +10,17 @@ extension EntryMessageExtension on EntryMessageEnum {
   }
 }
 
+extension RegisterAccountEntryMessageExtension on RegisterAccountEntryMessageEnum {
+  String get printMessage {
+    return switch (this) {
+      RegisterAccountEntryMessageEnum.client => 'Create Client Account',
+      RegisterAccountEntryMessageEnum.administrator => 'Create Client Administrator',
+      RegisterAccountEntryMessageEnum.back => 'Cancel',
+      RegisterAccountEntryMessageEnum.wrongMessage => '',
+    };
+  }
+}
+
 extension AdministratorEntryMessageExtension on AdministratorEntryMessageEnum {
   String get printMessage {
     return switch (this) {

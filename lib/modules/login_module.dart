@@ -7,6 +7,7 @@ import '../data/models/client_model.dart';
 
 import '../core/constants/app_constants.dart';
 
+import './client_module.dart';
 import './administrator_module.dart';
 
 class LoginModule {
@@ -35,7 +36,7 @@ class LoginModule {
         }
       }
       if (userModel is ClientModel) {
-        print('He is Client');
+        ClientModule.clientLoginActions();
       } else {
         bankData.addLog(
           userID: userID,

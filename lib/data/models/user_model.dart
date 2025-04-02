@@ -21,7 +21,7 @@ class UserModel {
     required String pin,
     required this.userName,
     DateTime? createTime,
-  }) : _userId = userID ?? UuidV4().generate().split(' - ').first,
+  }) : _userId = userID ?? UuidV4().generate().split('-').first,
        _password = password,
        _pin = pin,
        _createdTime = createTime ?? DateTime.now();

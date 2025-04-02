@@ -2,6 +2,8 @@ part '../extensions/app_messages_extensions.dart';
 
 enum EntryMessageEnum { createAccount, login, exit }
 
+enum RegisterAccountEntryMessageEnum { client, administrator, back,wrongMessage }
+
 enum AdministratorEntryMessageEnum {
   showLogs,
   showAdminInformation,

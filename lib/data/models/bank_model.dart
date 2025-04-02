@@ -9,8 +9,9 @@ class BankModel {
   final List<UserModel> _users;
   final List<LogsModel> logs;
   final List<String> _administratorToken;
+  int? selectedUserIndex;
 
-  const BankModel({
+  BankModel({
     required this.bankName,
     required List<UserModel> users,
     required this.logs,
@@ -25,6 +26,12 @@ class BankModel {
 
   // ------------------------- * Model Actions ------------------------------------- //
 
+  // * ------------------------ * Validate Administrator Token  -------------------------------------- //
+
+  bool validatedAdministratorToken(String inputValue) {
+    return _administratorToken.contains(inputValue);
+  }
+
   // * ------------------------ * Register Action -------------------------------------- //
 
   UserModel? loginAction({required String userID, required String password}) {
@@ -32,7 +39,35 @@ class BankModel {
       (element) => element.isSameUserID(userID) && element.isSamePassword(password),
     );
 
-    return tmpUserIndex != -1 ? _users[tmpUserIndex] : null;
+    if (tmpUserIndex != -1) {
+      selectedUserIndex = tmpUserIndex;
+      return _users[tmpUserIndex];
+    } else {
+      selectedUserIndex = null;
+      return null;
+    }
+  }
+
+  UserModel createAccount({
+    required String userName,
+    required String password,
+    required String pin,
+    required String token,
+    required bool isAdministrator,
+  }) {
+    var tmpUser =
+        isAdministrator
+            ? AdministratorModel(password: password, pin: pin, userName: userName, token: token)
+            : ClientModel.withAccount(
+              userName: userName,
+              password: password,
+              pin: pin,
+              accountBalance: 0,
+            );
+
+    _users.add(tmpUser);
+    selectedUserIndex = _users.length - 1;
+    return tmpUser;
   }
 
   // * ------------------------ * Log Actions -------------------------------------- //

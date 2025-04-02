@@ -6,6 +6,7 @@ import './core/enums/app_messages_enum.dart';
 import './core/utils/user_selected_input_conversion.dart';
 
 import './modules/login_module.dart';
+import 'modules/register_module.dart';
 
 void runApp() async {
   try {
@@ -35,6 +36,7 @@ void runApp() async {
       chosenMessage = convertUserSelectedInput(EntryMessageEnum.values);
 
       if (chosenMessage == EntryMessageEnum.createAccount) {
+        RegisterModule.createNewAccount();
       } else if (chosenMessage == EntryMessageEnum.login) {
         LoginModule.loginProcess();
       } else {
@@ -46,7 +48,7 @@ void runApp() async {
       }
     } while (isRunSystem);
   }
-  
+
   print('Please Wait Until System close\nIt will Tack Time');
   try {
     await JsonHelper.writeJson(bankData.toJson());
