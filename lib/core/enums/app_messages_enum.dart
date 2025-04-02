@@ -11,3 +11,10 @@ enum AdministratorEntryMessageEnum {
   wrongMessage,
 }
 
+enum ClientEntryMessageEnum {
+  showUserLogs,
+  addNewAccount,
+  showUserInformation,
+  logout,
+  wrongMessage,
+}

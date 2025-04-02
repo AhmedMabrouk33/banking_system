@@ -1,5 +1,6 @@
 import '../core/enums/app_messages_enum.dart'
     show AdministratorEntryMessageEnum, AdministratorEntryMessageExtension;
+import '../core/enums/user_actions_enums.dart';
 import '../core/utils/user_selected_input_conversion.dart';
 
 import '../data/universal_data.dart';
@@ -9,42 +10,84 @@ class AdministratorModule {
   const AdministratorModule._();
 
   static void administratorLoginActions() {
-    print('PLease Choose what you want to DO');
-    for (int index = 0; index < (AdministratorEntryMessageEnum.values.length - 1); index++) {
-      print('${index + 1} ${AdministratorEntryMessageEnum.values[index].printMessage}');
-    }
-    var chosenMessage = convertUserSelectedInput<AdministratorEntryMessageEnum>(
-      AdministratorEntryMessageEnum.values,
-    );
+    do {
+      print('PLease Choose what you want to DO');
+      for (int index = 0; index < (AdministratorEntryMessageEnum.values.length - 1); index++) {
+        print('${index + 1} ${AdministratorEntryMessageEnum.values[index].printMessage}');
+      }
+      var chosenMessage = convertUserSelectedInput<AdministratorEntryMessageEnum>(
+        AdministratorEntryMessageEnum.values,
+      );
 
-    switch (chosenMessage) {
-      case AdministratorEntryMessageEnum.showLogs:
-        print('=========== System Log is ===========================');
-        bankData.displayAllLogs();
-        break;
+      switch (chosenMessage) {
+        case AdministratorEntryMessageEnum.showLogs:
+          print('=========== System Log is ===========================');
+          bankData.displayLogs(null);
+          bankData.addLog(
+            userID: userModel?.userID ?? '',
+            userName: userModel?.userName ?? '',
+            accountNumber: (userModel as AdministratorModel).accountNumber,
+            userActionState: UserActionsEnums.showLogAction,
+            receiveAccountNumber: null,
+            amount: null,
+          );
+          break;
 
-      case AdministratorEntryMessageEnum.showAdminInformation:
-        print('=========== Your Information is ===========================');
-        (userModel as AdministratorModel).displayAccountInformation();
-        break;
+        case AdministratorEntryMessageEnum.showAdminInformation:
+          print('=========== Your Information is ===========================');
+          (userModel as AdministratorModel).displayAccountInformation();
+          bankData.addLog(
+            userID: userModel?.userID ?? '',
+            userName: userModel?.userName ?? '',
+            accountNumber: (userModel as AdministratorModel).accountNumber,
+            userActionState: UserActionsEnums.showHisAccountInformationAction,
+            receiveAccountNumber: null,
+            amount: null,
+          );
+          break;
 
-      case AdministratorEntryMessageEnum.showClientInformations:
-        print('=========== Clients Information is ===========================');
-        bankData.displayAllClientInformation();
-        break;
+        case AdministratorEntryMessageEnum.showClientInformations:
+          print('=========== Clients Information is ===========================');
+          bankData.displayAllClientInformation();
+          bankData.addLog(
+            userID: userModel?.userID ?? '',
+            userName: userModel?.userName ?? '',
+            accountNumber: (userModel as AdministratorModel).accountNumber,
+            userActionState: UserActionsEnums.showAllAccountsInformationAction,
+            receiveAccountNumber: null,
+            amount: null,
+          );
+          break;
 
-      case AdministratorEntryMessageEnum.logout:
-        isLogged = false;
-        break;
+        case AdministratorEntryMessageEnum.logout:
+          isLogged = false;
+          bankData.addLog(
+            userID: userModel?.userID ?? '',
+            userName: userModel?.userName ?? '',
+            accountNumber: (userModel as AdministratorModel).accountNumber,
+            userActionState: UserActionsEnums.logoutAction,
+            receiveAccountNumber: null,
+            amount: null,
+          );
+          break;
 
-      case AdministratorEntryMessageEnum.shutdownSystem:
-        isRunSystem = false;
-        isLogged = false;
-        print('We will shutdown System');
-        break;
+        case AdministratorEntryMessageEnum.shutdownSystem:
+          isRunSystem = false;
+          isLogged = false;
+          bankData.addLog(
+            userID: userModel?.userID ?? '',
+            userName: userModel?.userName ?? '',
+            accountNumber: (userModel as AdministratorModel).accountNumber,
+            userActionState: UserActionsEnums.shutdownSystemAction,
+            receiveAccountNumber: null,
+            amount: null,
+          );
+          print('We will shutdown System');
+          break;
 
-      default:
-        print('You Enter Wrong action\nplease try again');
-    }
+        default:
+          print('You Enter Wrong action\nplease try again');
+      }
+    } while (isLogged);
   }
 }

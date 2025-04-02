@@ -8,8 +8,8 @@ class LogsModel {
   final String accountNumber;
   final UserActionsEnums userActionState;
   final String? receiveAccountNumber;
-  final DateTime createdDateTime;
   final double? amount;
+  final DateTime createdDateTime;
 
   LogsModel({
     required this.userID,

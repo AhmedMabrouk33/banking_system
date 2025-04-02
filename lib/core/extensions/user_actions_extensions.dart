@@ -6,10 +6,14 @@ extension UserActionString on UserActionsEnums {
       UserActionsEnums.depositsAction => 'Deposits',
       UserActionsEnums.withdrawalsAction => 'Withdrawals',
       UserActionsEnums.transfersAction => 'Transfers',
-      UserActionsEnums.showAction => 'Show',
-      UserActionsEnums.login => 'Login',
-      UserActionsEnums.createNewAccount => 'Create New Account',
-      UserActionsEnums.registered => 'Registered',
+      UserActionsEnums.showLogAction => 'Show Log',
+      UserActionsEnums.showAllAccountsInformationAction => 'Show all account information',
+      UserActionsEnums.showHisAccountInformationAction => 'Show his account information',
+      UserActionsEnums.loginAction => 'Log in action',
+      UserActionsEnums.createNewAccountAction => 'Create new account',
+      UserActionsEnums.registeredAction => 'Registered',
+      UserActionsEnums.shutdownSystemAction => 'Shutdown system',
+      UserActionsEnums.logoutAction => 'Log out',
     };
   }
 }

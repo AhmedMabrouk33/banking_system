@@ -22,3 +22,15 @@ extension AdministratorEntryMessageExtension on AdministratorEntryMessageEnum {
     };
   }
 }
+
+extension ClientEntryMessageExtension on ClientEntryMessageEnum {
+  String get printMessage {
+    return switch (this) {
+      ClientEntryMessageEnum.showUserLogs => 'Show User Logs',
+      ClientEntryMessageEnum.addNewAccount => 'Add New Account',
+      ClientEntryMessageEnum.showUserInformation => 'Show User Information',
+      ClientEntryMessageEnum.logout => 'Log out',
+      ClientEntryMessageEnum.wrongMessage => '',
+    };
+  }
+}

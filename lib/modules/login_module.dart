@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import '../core/enums/user_actions_enums.dart';
+import '../data/models/admistrator_model.dart';
 import '../data/universal_data.dart';
 import '../data/models/client_model.dart';
 
@@ -35,9 +37,15 @@ class LoginModule {
       if (userModel is ClientModel) {
         print('He is Client');
       } else {
-        do {
-          AdministratorModule.administratorLoginActions();
-        } while (isLogged);
+        bankData.addLog(
+          userID: userID,
+          userName: userModel?.userName ?? '',
+          accountNumber: (userModel as AdministratorModel).accountNumber,
+          userActionState: UserActionsEnums.loginAction,
+          receiveAccountNumber: null,
+          amount: null,
+        );
+        AdministratorModule.administratorLoginActions();
       }
       print('Thanks For Use Our System\nWe need to see you again');
     } catch (e) {

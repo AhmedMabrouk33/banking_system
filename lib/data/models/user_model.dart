@@ -26,6 +26,8 @@ class UserModel {
        _pin = pin,
        _createdTime = createTime ?? DateTime.now();
 
+  String get userID => _userId;
+
   bool isSamePassword(String password) {
     return (password == _password) || (password == _pin);
   }

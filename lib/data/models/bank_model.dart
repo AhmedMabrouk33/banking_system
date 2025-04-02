@@ -1,3 +1,4 @@
+import '../../core/enums/user_actions_enums.dart';
 import 'admistrator_model.dart';
 import 'client_model.dart';
 import 'logs_model.dart';
@@ -24,6 +25,8 @@ class BankModel {
 
   // ------------------------- * Model Actions ------------------------------------- //
 
+  // * ------------------------ * Register Action -------------------------------------- //
+
   UserModel? loginAction({required String userID, required String password}) {
     int tmpUserIndex = _users.indexWhere(
       (element) => element.isSameUserID(userID) && element.isSamePassword(password),
@@ -32,11 +35,41 @@ class BankModel {
     return tmpUserIndex != -1 ? _users[tmpUserIndex] : null;
   }
 
-  void displayAllLogs() {
-    for (var singleLog in logs) {
-      print(singleLog.toString());
+  // * ------------------------ * Log Actions -------------------------------------- //
+
+  void addLog({
+    required String userID,
+    required String userName,
+    required String accountNumber,
+    required UserActionsEnums userActionState,
+    required String? receiveAccountNumber,
+    required double? amount,
+  }) {
+    logs.add(
+      LogsModel(
+        userID: userID,
+        userName: userName,
+        accountNumber: accountNumber,
+        userActionState: userActionState,
+        amount: amount,
+        receiveAccountNumber: receiveAccountNumber,
+      ),
+    );
+  }
+
+  void displayLogs(String? userID) {
+    if (logs.isNotEmpty) {
+      for (var singleLog in logs) {
+        if ((userID == null) || (singleLog.userID == userID)) {
+          print('${singleLog.toString()}\n====================================================\n');
+        }
+      }
+    } else {
+      print('There is No Logs\n==============================================================');
     }
   }
+
+  // * ------------------------ * Display Action -------------------------------------- //
 
   void displayAllClientInformation() {
     for (var singleUser in _users) {
