@@ -1,14 +1,14 @@
 import 'package:uuid/v4.dart';
 
 class UserModel {
-  final String userId;
+  final String _userId;
   final String _password;
   final String _pin;
   final String userName;
   final DateTime _createdTime;
 
-  UserModel.empty({this.userId = '', String password = '', this.userName = '', String pin = ''})
-    : _password = password,
+  UserModel.empty({String userId = '', String password = '', this.userName = '', String pin = ''})
+    : _userId = userId, _password = password,
       _pin = pin,
       _createdTime = DateTime.now();
 
@@ -18,7 +18,7 @@ class UserModel {
     required String pin,
     required this.userName,
     DateTime? createTime,
-  }) : userId = userID ?? UuidV4().generate().split(' - ').first,
+  }) : _userId = userID ?? UuidV4().generate().split(' - ').first,
        _password = password,
        _pin = pin,
        _createdTime = createTime ?? DateTime.now();
@@ -28,7 +28,7 @@ class UserModel {
   }
 
   bool isSameUserID(String userID) {
-    return userID == userId;
+    return userID == _userId;
   }
 
   void displayAccountInformation() {
@@ -39,7 +39,7 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "userId": userId,
+      "userId": _userId,
       "userName": userName,
       "password": _password,
       "createdTime": _createdTime.toLocal(),

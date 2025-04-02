@@ -25,6 +25,11 @@ class ClientModel extends UserModel {
     required List<AccountModel> accounts,
   }) : _accounts = accounts;
 
+  ///
+  /// Method Name: displayAccountInformation
+  /// This Function Show:
+  /// `User Name`, `Created Time`, Accounts and it's amount.
+  ///
   @override
   void displayAccountInformation() {
     super.displayAccountInformation();
@@ -38,6 +43,20 @@ class ClientModel extends UserModel {
     } else {
       print('You have No Account');
     }
+  }
+
+  ///
+  /// Method Name: displayClientInformation
+  /// Return : String
+  /// This Function Show:
+  /// `User Name`, `Created Time`, Number of account which user have.
+  ///
+  String displayClientInformation() {
+    String tmpReturnString = 'Client Name : ${super.userName}\n';
+    tmpReturnString += 'Created Date : ${super.createdTime.customFormate}\n';
+    tmpReturnString += 'Accounts Number : ${_accounts.length}';
+
+    return tmpReturnString;
   }
 
   void createNewAccount({required double amount}) {

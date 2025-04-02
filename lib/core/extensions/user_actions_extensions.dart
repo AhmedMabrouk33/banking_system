@@ -7,6 +7,9 @@ extension UserActionString on UserActionsEnums {
       UserActionsEnums.withdrawalsAction => 'Withdrawals',
       UserActionsEnums.transfersAction => 'Transfers',
       UserActionsEnums.showAction => 'Show',
+      UserActionsEnums.login => 'Login',
+      UserActionsEnums.createNewAccount => 'Create New Account',
+      UserActionsEnums.registered => 'Registered',
     };
   }
 }

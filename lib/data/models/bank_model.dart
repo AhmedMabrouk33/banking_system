@@ -22,13 +22,34 @@ class BankModel {
       _users = [],
       logs = [];
 
+  // ------------------------- * Model Actions ------------------------------------- //
+
   UserModel? loginAction({required String userID, required String password}) {
     int tmpUserIndex = _users.indexWhere(
       (element) => element.isSameUserID(userID) && element.isSamePassword(password),
     );
 
-    return _users.elementAtOrNull(tmpUserIndex);
+    return tmpUserIndex != -1 ? _users[tmpUserIndex] : null;
   }
+
+  void displayAllLogs() {
+    for (var singleLog in logs) {
+      print(singleLog.toString());
+    }
+  }
+
+  void displayAllClientInformation() {
+    for (var singleUser in _users) {
+      if (singleUser is ClientModel) {
+        print('====Client====\n${singleUser.displayClientInformation()}');
+      } else {
+        print('====Administrator====');
+        (singleUser as AdministratorModel).displayAccountInformation();
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------------- //
 
   factory BankModel.fromJson(Map<String, dynamic> json) {
     List<UserModel> tmpUsers = [];

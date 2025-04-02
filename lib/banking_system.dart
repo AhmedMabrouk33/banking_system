@@ -1,12 +1,14 @@
-import 'dart:io';
-
 import './core/utils/json_helper.dart';
 import './data/universal_data.dart';
-import 'data/models/bank_model.dart';
+import './data/models/bank_model.dart';
+
+import './core/enums/app_messages_enum.dart';
+import './core/utils/user_selected_input_conversion.dart';
+
+import './modules/login_module.dart';
 
 void runApp() async {
   try {
-    isRunSystem = true;
     Map<String, dynamic> json = await JsonHelper.readJson();
     bankData = BankModel.fromJson(json);
   } catch (e) {
@@ -21,11 +23,34 @@ void runApp() async {
       ],
     );
   } finally {
+    isRunSystem = true;
     print(bankData.toString());
+    late EntryMessageEnum chosenMessage;
     do {
-      print('Welcome to Bank ${bankData.bankName}');
-      String userChoose = stdin.readLineSync() ?? '';
-      isRunSystem = false;
+      print('=========== Welcome to Bank ${bankData.bankName} ===========');
+      print('PLease Choose what you want to DO');
+      for (int index = 0; index < EntryMessageEnum.values.length; index++) {
+        print('${index + 1} ${EntryMessageEnum.values[index].printMessage}');
+      }
+      chosenMessage = convertUserSelectedInput(EntryMessageEnum.values);
+
+      if (chosenMessage == EntryMessageEnum.createAccount) {
+      } else if (chosenMessage == EntryMessageEnum.login) {
+        LoginModule.loginProcess();
+      } else {
+        print('''You Entered Wrong Choose
+ Thanks for Use Our banking system
+ ============================================================
+
+ ''');
+      }
     } while (isRunSystem);
   }
+  // BUG: Error writing JSON file: Converting object to an encodable object failed: Instance of 'DateTime'
+  /*print('Please Wait Until System close\nIt will Tack Time');
+  try {
+    await JsonHelper.writeJson(bankData.toJson());
+  } catch (e) {
+    print('Error: $e');
+  }*/
 }

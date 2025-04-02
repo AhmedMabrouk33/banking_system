@@ -31,7 +31,9 @@ class LogsModel {
     if (userActionState == UserActionsEnums.transfersAction) {
       returnString += '\nReceived Account : $receiveAccountNumber';
     }
-    if (userActionState != UserActionsEnums.showAction) {
+    if ((userActionState == UserActionsEnums.depositsAction) ||
+        (userActionState == UserActionsEnums.transfersAction) ||
+        (userActionState == UserActionsEnums.withdrawalsAction)) {
       returnString += '\nAmount : ${(amount ?? 0).toStringAsFixed(2)}';
     }
 
@@ -59,7 +61,7 @@ class LogsModel {
       "accountNumber": accountNumber,
       "userActionState": userActionState.index,
       "receiveAccountNumber": receiveAccountNumber,
-      "createdTime": createdDateTime.toLocal(),
+      "createdDateTime": createdDateTime.toLocal(),
       "amount": amount,
     };
   }
