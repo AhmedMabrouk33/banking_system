@@ -1,11 +1,8 @@
-import 'package:banking_system/data/universal_data.dart';
-
 import '../core/enums/app_messages_enum.dart'
     show AdministratorEntryMessageEnum, AdministratorEntryMessageExtension;
 import '../core/utils/user_selected_input_conversion.dart';
 
 import '../data/universal_data.dart';
-
 import '../data/models/admistrator_model.dart';
 
 class AdministratorModule {

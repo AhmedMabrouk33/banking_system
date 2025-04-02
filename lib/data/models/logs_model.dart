@@ -61,7 +61,7 @@ class LogsModel {
       "accountNumber": accountNumber,
       "userActionState": userActionState.index,
       "receiveAccountNumber": receiveAccountNumber,
-      "createdDateTime": createdDateTime.toLocal(),
+      "createdDateTime": createdDateTime.toStringConvert,
       "amount": amount,
     };
   }

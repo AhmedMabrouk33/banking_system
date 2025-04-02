@@ -1,5 +1,7 @@
 import 'package:uuid/v4.dart';
 
+import '../../core/extensions/date_time_extension.dart';
+
 class UserModel {
   final String _userId;
   final String _password;
@@ -8,7 +10,8 @@ class UserModel {
   final DateTime _createdTime;
 
   UserModel.empty({String userId = '', String password = '', this.userName = '', String pin = ''})
-    : _userId = userId, _password = password,
+    : _userId = userId,
+      _password = password,
       _pin = pin,
       _createdTime = DateTime.now();
 
@@ -42,7 +45,7 @@ class UserModel {
       "userId": _userId,
       "userName": userName,
       "password": _password,
-      "createdTime": _createdTime.toLocal(),
+      "createdTime": _createdTime.toStringConvert,
       "pin": _pin,
     };
   }

@@ -5,31 +5,19 @@
             "userId": "RsHJSP7H",
             "userName": "johnDoe",
             "password": "password123",
-            "createdTime": "2025-04-01T03:00:24.623177",
+            "createdTime": "2025-04-01 03:00:24.623177",
             "pin": "1234",
-            "accounts": [
-                {
-                    "id": "acc-1627353457812",
-                    "balance": 1000.50,
-                    "createdTime": "2025-04-01T03:00:24.623177"
-                },
-                {
-                    "id": "acc-1627353457853",
-                    "balance": 1000.50,
-                    "createdTime": "2025-04-01T03:00:24.623177"
-                }
-            ],
-            "isClient": true
+            "accountNumber": "",
+            "token": ""
         },
         {
             "userId": "VBokIvIG",
             "userName": "johnDoe2",
-            "accountNumber": "ADD-1627353457812",
             "password": "securePassword123",
-            "createdTime": "2025-04-01T03:00:24.623218",
+            "createdTime": "2025-04-01 03:00:24.623218",
             "pin": "1234",
-            "token": "abc123xyz456",
-            "isClient": false
+            "accountNumber": "ADD-1627353457812",
+            "token": "abc123xyz456"
         }
     ],
     "logs": [
@@ -39,7 +27,7 @@
             "accountNumber": "acc-1627353457812",
             "userActionState": 0,
             "receiveAccountNumber": null,
-            "createdDateTime": "2025-04-01T10:30:00.000Z",
+            "createdDateTime": "2025-04-01 12:30:00.000",
             "amount": 250.75
         },
         {
@@ -48,7 +36,7 @@
             "accountNumber": "acc-1627353457812",
             "userActionState": 1,
             "receiveAccountNumber": null,
-            "createdDateTime": "2025-04-01T10:30:00.000Z",
+            "createdDateTime": "2025-04-01 12:30:00.000",
             "amount": 250.75
         },
         {
@@ -57,7 +45,7 @@
             "accountNumber": "acc-1627353457812",
             "userActionState": 2,
             "receiveAccountNumber": "acc-1627353457853",
-            "createdDateTime": "2025-04-01T10:30:00.000Z",
+            "createdDateTime": "2025-04-01 12:30:00.000",
             "amount": 250.75
         },
         {
@@ -66,16 +54,16 @@
             "accountNumber": "acc-1627353457812",
             "userActionState": 3,
             "receiveAccountNumber": null,
-            "createdDateTime": "2025-04-01T10:30:00.000Z",
+            "createdDateTime": "2025-04-01 12:30:00.000",
             "amount": null
         },
         {
             "userID": "VBokIvIG",
             "userName": "johnDoe2",
-            "accountNumber": null,
+            "accountNumber": "",
             "userActionState": 3,
             "receiveAccountNumber": null,
-            "createdDateTime": "2025-04-01T10:30:00.000Z",
+            "createdDateTime": "2025-04-01 12:30:00.000",
             "amount": null
         }
     ],

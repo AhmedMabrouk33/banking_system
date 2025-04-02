@@ -46,11 +46,11 @@ void runApp() async {
       }
     } while (isRunSystem);
   }
-  // BUG: Error writing JSON file: Converting object to an encodable object failed: Instance of 'DateTime'
-  /*print('Please Wait Until System close\nIt will Tack Time');
+  
+  print('Please Wait Until System close\nIt will Tack Time');
   try {
     await JsonHelper.writeJson(bankData.toJson());
   } catch (e) {
     print('Error: $e');
-  }*/
+  }
 }

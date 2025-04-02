@@ -10,3 +10,4 @@ enum AdministratorEntryMessageEnum {
   shutdownSystem,
   wrongMessage,
 }
+
