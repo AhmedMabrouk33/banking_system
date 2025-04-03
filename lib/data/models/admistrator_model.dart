@@ -40,6 +40,6 @@ class AdministratorModel extends UserModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return {...super.toJson(), "accountNumber": accountNumber, "token": _token};
+    return {...super.toJson(), "accountNumber": accountNumber, "token": _token, "accounts": []};
   }
 }

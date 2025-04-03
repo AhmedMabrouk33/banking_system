@@ -168,11 +168,11 @@ class BankModel {
       "users":
           _users.isNotEmpty
               ? [
-                ..._users.map(
+                ..._users.map<Map<String, dynamic>>(
                   (element) =>
                       (element is ClientModel)
-                          ? element.toJson()
-                          : (element as AdministratorModel).toJson(),
+                          ? {...element.toJson(), "isClient": true}
+                          : {...(element as AdministratorModel).toJson(), "isClient": false},
                 ),
               ]
               : [],

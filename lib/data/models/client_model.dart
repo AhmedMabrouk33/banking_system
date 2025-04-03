@@ -116,6 +116,8 @@ class ClientModel extends UserModel {
     return {
       ...super.toJson(),
       "accounts": _accounts.isNotEmpty ? _accounts.map((element) => element.toJson()).toList() : [],
+      "accountNumber": null,
+      "token": null,
     };
   }
 }

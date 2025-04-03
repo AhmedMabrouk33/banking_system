@@ -7,8 +7,21 @@
             "password": "password123",
             "createdTime": "2025-04-01 03:00:24.623177",
             "pin": "1234",
-            "accountNumber": "",
-            "token": ""
+            "accounts": [
+                {
+                    "id": "acc-1627353457812",
+                    "balance": 1000.0,
+                    "createdTime": "2025-04-01 03:00:24.623177"
+                },
+                {
+                    "id": "acc-1627353457853",
+                    "balance": 500.0,
+                    "createdTime": "2025-04-01 03:00:24.623177"
+                }
+            ],
+            "accountNumber": null,
+            "token": null,
+            "isClient": true
         },
         {
             "userId": "VBokIvIG",
@@ -17,7 +30,9 @@
             "createdTime": "2025-04-01 03:00:24.623218",
             "pin": "1234",
             "accountNumber": "ADD-1627353457812",
-            "token": "abc123xyz456"
+            "token": "abc123xyz456",
+            "accounts": [],
+            "isClient": false
         }
     ],
     "logs": [
