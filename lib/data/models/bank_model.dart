@@ -9,7 +9,7 @@ class BankModel {
   final List<UserModel> _users;
   final List<LogsModel> logs;
   final List<String> _administratorToken;
-  int? selectedUserIndex;
+  int? _selectedUserIndex;
 
   BankModel({
     required this.bankName,
@@ -26,13 +26,20 @@ class BankModel {
 
   // ------------------------- * Model Actions ------------------------------------- //
 
+  // * ------------------------ * Save Client Action  -------------------------------------- //
+  void saveClientImage(ClientModel clientImageData) {
+    if (_selectedUserIndex != null) {
+      _users[_selectedUserIndex ?? -1] = clientImageData;
+    }
+  }
+
   // * ------------------------ * Validate Administrator Token  -------------------------------------- //
 
   bool validatedAdministratorToken(String inputValue) {
     return _administratorToken.contains(inputValue);
   }
 
-  // * ------------------------ * Register Action -------------------------------------- //
+  // * ------------------------ * Register/Log in Action -------------------------------------- //
 
   UserModel? loginAction({required String userID, required String password}) {
     int tmpUserIndex = _users.indexWhere(
@@ -40,10 +47,10 @@ class BankModel {
     );
 
     if (tmpUserIndex != -1) {
-      selectedUserIndex = tmpUserIndex;
+      _selectedUserIndex = tmpUserIndex;
       return _users[tmpUserIndex];
     } else {
-      selectedUserIndex = null;
+      _selectedUserIndex = null;
       return null;
     }
   }
@@ -66,30 +73,32 @@ class BankModel {
             );
 
     _users.add(tmpUser);
-    selectedUserIndex = _users.length - 1;
+    _selectedUserIndex = _users.length - 1;
     return tmpUser;
   }
 
   // * ------------------------ * Log Actions -------------------------------------- //
 
   void addLog({
-    required String userID,
-    required String userName,
-    required String accountNumber,
     required UserActionsEnums userActionState,
     required String? receiveAccountNumber,
     required double? amount,
   }) {
-    logs.add(
-      LogsModel(
-        userID: userID,
-        userName: userName,
-        accountNumber: accountNumber,
-        userActionState: userActionState,
-        amount: amount,
-        receiveAccountNumber: receiveAccountNumber,
-      ),
-    );
+    if (_selectedUserIndex != null) {
+      logs.add(
+        LogsModel(
+          userID: _users[_selectedUserIndex ?? -1].userID,
+          userName: _users[_selectedUserIndex ?? -1].userName,
+          accountNumber:
+              (_users[_selectedUserIndex ?? -1] is AdministratorModel)
+                  ? (_users[_selectedUserIndex ?? -1] as AdministratorModel).accountNumber
+                  : (_users[_selectedUserIndex ?? -1] as ClientModel).accountNumber,
+          userActionState: userActionState,
+          amount: amount,
+          receiveAccountNumber: receiveAccountNumber,
+        ),
+      );
+    }
   }
 
   void displayLogs(String? userID) {

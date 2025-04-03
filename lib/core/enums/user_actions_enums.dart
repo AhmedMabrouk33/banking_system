@@ -3,6 +3,7 @@ enum UserActionsEnums {
   withdrawalsAction,
   transfersAction,
   showLogAction,
+  showHisLogAction,
   showAllAccountsInformationAction,
   showHisAccountInformationAction,
   loginAction,

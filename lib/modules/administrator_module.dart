@@ -24,9 +24,6 @@ class AdministratorModule {
           print('=========== System Log is ===========================');
           bankData.displayLogs(null);
           bankData.addLog(
-            userID: userModel?.userID ?? '',
-            userName: userModel?.userName ?? '',
-            accountNumber: (userModel as AdministratorModel).accountNumber,
             userActionState: UserActionsEnums.showLogAction,
             receiveAccountNumber: null,
             amount: null,
@@ -37,9 +34,6 @@ class AdministratorModule {
           print('=========== Your Information is ===========================');
           (userModel as AdministratorModel).displayAccountInformation();
           bankData.addLog(
-            userID: userModel?.userID ?? '',
-            userName: userModel?.userName ?? '',
-            accountNumber: (userModel as AdministratorModel).accountNumber,
             userActionState: UserActionsEnums.showHisAccountInformationAction,
             receiveAccountNumber: null,
             amount: null,
@@ -50,9 +44,6 @@ class AdministratorModule {
           print('=========== Clients Information is ===========================');
           bankData.displayAllClientInformation();
           bankData.addLog(
-            userID: userModel?.userID ?? '',
-            userName: userModel?.userName ?? '',
-            accountNumber: (userModel as AdministratorModel).accountNumber,
             userActionState: UserActionsEnums.showAllAccountsInformationAction,
             receiveAccountNumber: null,
             amount: null,
@@ -62,9 +53,6 @@ class AdministratorModule {
         case AdministratorEntryMessageEnum.logout:
           isLogged = false;
           bankData.addLog(
-            userID: userModel?.userID ?? '',
-            userName: userModel?.userName ?? '',
-            accountNumber: (userModel as AdministratorModel).accountNumber,
             userActionState: UserActionsEnums.logoutAction,
             receiveAccountNumber: null,
             amount: null,
@@ -75,9 +63,6 @@ class AdministratorModule {
           isRunSystem = false;
           isLogged = false;
           bankData.addLog(
-            userID: userModel?.userID ?? '',
-            userName: userModel?.userName ?? '',
-            accountNumber: (userModel as AdministratorModel).accountNumber,
             userActionState: UserActionsEnums.shutdownSystemAction,
             receiveAccountNumber: null,
             amount: null,

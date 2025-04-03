@@ -25,6 +25,12 @@ class ClientModel extends UserModel {
     required List<AccountModel> accounts,
   }) : _accounts = accounts;
 
+  String get accountNumber => _accounts[selectedAccountIndex].accountNumber;
+
+  void displaySelectedAccountInformation() {
+    print(_accounts[selectedAccountIndex].displayAccountInformation());
+  }
+
   ///
   /// Method Name: displayAccountInformation
   /// This Function Show:
@@ -73,6 +79,8 @@ class ClientModel extends UserModel {
     return balance > _accounts[selectedAccountIndex].balance;
   }
 
+  // * --------------------- Transactions actions --------------------------------------------- //
+
   void deposit(double addAmount) {
     _accounts[selectedAccountIndex].newBalance =
         _accounts[selectedAccountIndex].balance + addAmount;
@@ -82,6 +90,8 @@ class ClientModel extends UserModel {
     _accounts[selectedAccountIndex].newBalance =
         _accounts[selectedAccountIndex].balance - withDrawAmount;
   }
+
+  // ------------------------------------------------------------------------------------------------------- //
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
     List<AccountModel> tmpAccounts = [];
@@ -101,6 +111,7 @@ class ClientModel extends UserModel {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       ...super.toJson(),

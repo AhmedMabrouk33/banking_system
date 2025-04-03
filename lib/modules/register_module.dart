@@ -6,10 +6,13 @@ import '../core/enums/register_field_enum.dart';
 import '../core/enums/app_messages_enum.dart'
     show RegisterAccountEntryMessageEnum, RegisterAccountEntryMessageExtension;
 
+import '../core/enums/user_actions_enums.dart';
 import '../core/extensions/custom_string_extension.dart';
 
 import '../core/utils/user_selected_input_conversion.dart';
 
+import '../data/models/admistrator_model.dart';
+import '../data/models/client_model.dart';
 import '../data/universal_data.dart' show isLogged, bankData, userModel;
 
 import './client_module.dart';
@@ -83,6 +86,12 @@ class RegisterModule {
         print('Please save This information to login again');
         print('Your user ID is ${userModel?.userID}');
 
+        bankData.addLog(
+          userActionState: UserActionsEnums.registeredAction,
+          receiveAccountNumber: null,
+          amount: null,
+        );
+
         selectedCreatedAccount == RegisterAccountEntryMessageEnum.administrator
             ? AdministratorModule.administratorLoginActions()
             : ClientModule.clientLoginActions();
@@ -93,18 +102,21 @@ class RegisterModule {
   String? _getUserInputData(String inputMessage, String? validateInput, bool isToken) {
     String? tmpString;
 
-    for (int index = AppConstants.loginMaxTry; index > 0; index--) {
+    bool isValidateInput;
+
+    for (int index = (AppConstants.loginMaxTry - 1); index > 0; index--) {
       stdout.write("Enter $inputMessage : ");
       tmpString = stdin.readLineSync() ?? '';
-      if (!isToken && tmpString.validated(validateInput)) {
+      isValidateInput =
+          isToken
+              ? bankData.validatedAdministratorToken(tmpString)
+              : tmpString.validated(validateInput);
+      if (isValidateInput) {
         break;
-      } else {
-        if (bankData.validatedAdministratorToken(tmpString)) {
-          break;
-        } else {
-          print('Your token is Wrong\nPlease try Again');
-        }
-      }
+      } else if (isToken) {
+        print('Your token is Wrong\nPlease try Again');
+      } else {}
+
       print('Remain Tries are ${index - 1}');
       tmpString = null;
     }
