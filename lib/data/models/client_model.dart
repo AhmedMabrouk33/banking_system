@@ -27,6 +27,23 @@ class ClientModel extends UserModel {
 
   String get accountNumber => _accounts[selectedAccountIndex].accountNumber;
 
+  String get getSelectedAccountBalance =>
+      _accounts[selectedAccountIndex].balance.toStringAsFixed(2);
+
+  // * --------------------- Display actions --------------------------------------------- //
+  bool checkAccountInput(String chosenAccountEntry) {
+    int? tmpConvertedChosenAccountEntry = int.tryParse(chosenAccountEntry);
+    if ((tmpConvertedChosenAccountEntry != null) &&
+        (tmpConvertedChosenAccountEntry > 0) &&
+        (tmpConvertedChosenAccountEntry <= _accounts.length)) {
+      selectedAccountIndex = tmpConvertedChosenAccountEntry - 1;
+      return true;
+    }
+    return false;
+  }
+
+  // * --------------------- Display actions --------------------------------------------- //
+
   void displaySelectedAccountInformation() {
     print(_accounts[selectedAccountIndex].displayAccountInformation());
   }
@@ -73,10 +90,11 @@ class ClientModel extends UserModel {
     for (int index = 0; index < _accounts.length; index++) {
       print('${index + 1} ${_accounts[index].displayAccountInformation()}');
     }
+    print('b for back');
   }
 
-  bool isAvailableBalance(double balance) {
-    return balance > _accounts[selectedAccountIndex].balance;
+  bool isNotEmptyBalance() {
+    return _accounts[selectedAccountIndex].balance > 0;
   }
 
   // * --------------------- Transactions actions --------------------------------------------- //
@@ -84,11 +102,17 @@ class ClientModel extends UserModel {
   void deposit(double addAmount) {
     _accounts[selectedAccountIndex].newBalance =
         _accounts[selectedAccountIndex].balance + addAmount;
+    print('Your New balance is ${_accounts[selectedAccountIndex].balance}');
   }
 
-  void withdraw(double withDrawAmount) {
-    _accounts[selectedAccountIndex].newBalance =
-        _accounts[selectedAccountIndex].balance - withDrawAmount;
+  bool withdraw(double withDrawAmount) {
+    if (withDrawAmount <= _accounts[selectedAccountIndex].balance) {
+      _accounts[selectedAccountIndex].newBalance =
+          _accounts[selectedAccountIndex].balance - withDrawAmount;
+      print('Your New balance is ${_accounts[selectedAccountIndex].balance}');
+      return true;
+    }
+    return false;
   }
 
   // ------------------------------------------------------------------------------------------------------- //

@@ -6,6 +6,7 @@ extension UserActionString on UserActionsEnums {
       UserActionsEnums.depositsAction => 'Deposits',
       UserActionsEnums.withdrawalsAction => 'Withdrawals',
       UserActionsEnums.transfersAction => 'Transfers',
+      UserActionsEnums.showAccountBalance => 'Show Selected Account balance',
       UserActionsEnums.showLogAction => 'Show All Logs',
       UserActionsEnums.showHisLogAction => 'Show his Log',
       UserActionsEnums.showAllAccountsInformationAction => 'Show all account information',

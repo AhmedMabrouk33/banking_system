@@ -37,11 +37,27 @@ extension AdministratorEntryMessageExtension on AdministratorEntryMessageEnum {
 extension ClientEntryMessageExtension on ClientEntryMessageEnum {
   String get printMessage {
     return switch (this) {
+      ClientEntryMessageEnum.chooseAccountForTransactionAction =>
+        'Choose Account for Transaction Action',
       ClientEntryMessageEnum.showUserLogs => 'Show User Logs',
       ClientEntryMessageEnum.addNewAccount => 'Add New Account',
       ClientEntryMessageEnum.showUserInformation => 'Show User Information',
       ClientEntryMessageEnum.logout => 'Log out',
       ClientEntryMessageEnum.wrongMessage => '',
+    };
+  }
+}
+
+extension ClientTransactionsEntryMessageExtension on ClientTransactionsEntryMessageEnum {
+  String get printMessage {
+    return switch (this) {
+      ClientTransactionsEntryMessageEnum.deposit => 'Deposit',
+      ClientTransactionsEntryMessageEnum.withdraw => 'Withdraw',
+      ClientTransactionsEntryMessageEnum.transferMoney => 'Transfer Money',
+      ClientTransactionsEntryMessageEnum.showBalance => 'Show Balance',
+      ClientTransactionsEntryMessageEnum.back => 'back',
+      ClientTransactionsEntryMessageEnum.logout => 'Logout',
+      ClientTransactionsEntryMessageEnum.wrongMessage => '',
     };
   }
 }
