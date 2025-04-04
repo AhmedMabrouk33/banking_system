@@ -273,7 +273,7 @@ class ClientModule {
           } else {
             selectedTransferAccountIndex = int.tryParse(userEntry);
             if ((selectedTransferAccountIndex != null) &&
-                (selectedTransferAccountIndex < availableUserTransferAccounts.length) &&
+                (selectedTransferAccountIndex <= availableUserTransferAccounts.length) &&
                 (selectedTransferAccountIndex >= 0)) {
               break;
             } else {
@@ -287,12 +287,12 @@ class ClientModule {
           userInputAmount = _getClientAmount(actionTypeMessage: 'Transfer Money');
           if (userInputAmount != null) {
             if ((userModel as ClientModel).completedTransferAmount(
-              transferAccount: availableUserTransferAccounts[selectedTransferAccountIndex],
+              transferAccount: availableUserTransferAccounts[selectedTransferAccountIndex - 1],
               transferAmount: userInputAmount,
             )) {
               bankData.addLog(
                 userActionState: UserActionsEnums.transfersAction,
-                receiveAccountNumber: availableUserTransferAccounts[selectedTransferAccountIndex],
+                receiveAccountNumber: availableUserTransferAccounts[selectedTransferAccountIndex-1],
                 amount: userInputAmount,
               );
             } else {

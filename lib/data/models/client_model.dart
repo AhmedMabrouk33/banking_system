@@ -130,12 +130,13 @@ class ClientModel extends UserModel {
   }
 
   bool completedTransferAmount({required String transferAccount, required double transferAmount}) {
-    if (transferAmount >= _accounts[selectedAccountIndex].balance) {
+    if (transferAmount <= _accounts[selectedAccountIndex].balance) {
       int transferAccountIndex = _accounts.indexWhere((e) => e.accountNumber == transferAccount);
       if (transferAccountIndex != -1) {
         withdraw(transferAmount);
         _accounts[transferAccountIndex].newBalance =
             _accounts[transferAccountIndex].balance + transferAmount;
+        return true;
       } else {
         return false;
       }
