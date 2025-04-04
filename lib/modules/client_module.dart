@@ -7,7 +7,9 @@ import '../core/enums/app_messages_enum.dart'
         ClientEntryMessageEnum,
         ClientEntryMessageExtension,
         ClientTransactionsEntryMessageEnum,
-        ClientTransactionsEntryMessageExtension;
+        ClientTransactionsEntryMessageExtension,
+        ClientTransferMoneyEntryMessageEnum,
+        ClientTransferMoneyEntryMessageExtension;
 import '../core/enums/user_actions_enums.dart';
 
 import '../core/utils/user_selected_input_conversion.dart';
@@ -180,6 +182,13 @@ class ClientModule {
           print('You Can\'t Make Withdraw Action \nPlease Deposit Amount to make this process');
           print('================================================================================');
         }
+      } else if (chosenMessage == ClientTransactionsEntryMessageEnum.transferMoney) {
+        if (tmpUserModel.isNotEmptyBalance()) {
+          _transferMoneyProcess();
+        } else {
+          print('You Can\'t Make Transfer Action \nPlease Deposit Amount to make this process');
+          print('================================================================================');
+        }
       } else if (chosenMessage == ClientTransactionsEntryMessageEnum.showBalance) {
         print('Your balance : ${(userModel as ClientModel).getSelectedAccountBalance}');
         bankData.addLog(
@@ -227,5 +236,117 @@ class ClientModule {
       }
     }
     return null;
+  }
+
+  static void _transferMoneyProcess() {
+    double? userInputAmount;
+    var chosenMessage = ClientTransferMoneyEntryMessageEnum.wrongMessage;
+    do {
+      print('PLease Choose what you want to DO');
+      for (
+        int index = 0;
+        index < (ClientTransferMoneyEntryMessageEnum.values.length - 1);
+        index++
+      ) {
+        print('${index + 1} ${ClientTransferMoneyEntryMessageEnum.values[index].printMessage}');
+      }
+      chosenMessage = convertUserSelectedInput<ClientTransferMoneyEntryMessageEnum>(
+        ClientTransferMoneyEntryMessageEnum.values,
+      );
+
+      if (chosenMessage == ClientTransferMoneyEntryMessageEnum.yourAccount) {
+        List<String> availableUserTransferAccounts =
+            (userModel as ClientModel).readAvailableAccountToTransferMoney();
+        int? selectedTransferAccountIndex;
+        for (int index = AppConstants.loginMaxTry - 1; index > 0; index--) {
+          print('Please select Account which will transfer to it');
+          for (int index = 0; index < availableUserTransferAccounts.length; index++) {
+            print('${index + 1}. ${availableUserTransferAccounts[index]} ');
+          }
+          stdout.write("Enter a Account index to select an option or `B` for Back: ");
+
+          // Read user input and try parsing it
+          String userEntry = stdin.readLineSync() ?? '';
+
+          if (_backRegExp.hasMatch(userEntry)) {
+            break;
+          } else {
+            selectedTransferAccountIndex = int.tryParse(userEntry);
+            if ((selectedTransferAccountIndex != null) &&
+                (selectedTransferAccountIndex < availableUserTransferAccounts.length) &&
+                (selectedTransferAccountIndex >= 0)) {
+              break;
+            } else {
+              selectedTransferAccountIndex = null;
+              print('Wrong user input\nPlease Try again\nYour remain tries ${index - 1}');
+            }
+          }
+        }
+
+        if (selectedTransferAccountIndex != null) {
+          userInputAmount = _getClientAmount(actionTypeMessage: 'Transfer Money');
+          if (userInputAmount != null) {
+            if ((userModel as ClientModel).completedTransferAmount(
+              transferAccount: availableUserTransferAccounts[selectedTransferAccountIndex],
+              transferAmount: userInputAmount,
+            )) {
+              bankData.addLog(
+                userActionState: UserActionsEnums.transfersAction,
+                receiveAccountNumber: availableUserTransferAccounts[selectedTransferAccountIndex],
+                amount: userInputAmount,
+              );
+            } else {
+              print('Error please check your balance\nPlease Try again');
+              print('============================================================================');
+            }
+          }
+        }
+      } else if (chosenMessage == ClientTransferMoneyEntryMessageEnum.otherUserAccount) {
+        _transferToAnotherAccountProcess();
+      }
+    } while (chosenMessage == ClientTransferMoneyEntryMessageEnum.wrongMessage);
+  }
+
+  static void _transferToAnotherAccountProcess() {
+    stdout.write("Enter Transfer account Number or `b` for back: ");
+
+    // Read user input and try parsing it
+    String? transferAccount = stdin.readLineSync();
+
+    if (transferAccount != null) {
+      Map<String, dynamic> transferAccountData = bankData.getTransferAccountData(
+        accountNumber: transferAccount,
+      );
+      if (transferAccount.isNotEmpty) {
+        double? transferAmount = _getClientAmount(actionTypeMessage: 'Transfer Money');
+        if (transferAmount != null) {
+          if ((userModel as ClientModel).withdraw(transferAmount)) {
+            bankData.transformAmountMoney(
+              transferUserData: transferAccountData,
+              transferAmount: transferAmount,
+            );
+            print(
+              'You transferred ${transferAmount.toStringAsFixed(2)} to account $transferAccount',
+            );
+            print('========================================================');
+            bankData.addLog(
+              userActionState: UserActionsEnums.transfersAction,
+              receiveAccountNumber: transferAccount,
+              amount: transferAmount,
+            );
+          } else {
+            print('Please Check your balance\nTry again');
+            print('========================================================');
+          }
+        }
+      } else {
+        print('Can\'t complete the transfer process\nPlease check Account Number and try again');
+      }
+    } else {
+      print('We couldn\'t complete Transfer process\nPlease try Again');
+      print(
+        '======================================================================================================',
+      );
+    }
   }
 }

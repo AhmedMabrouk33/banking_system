@@ -61,3 +61,14 @@ extension ClientTransactionsEntryMessageExtension on ClientTransactionsEntryMess
     };
   }
 }
+
+extension ClientTransferMoneyEntryMessageExtension on ClientTransferMoneyEntryMessageEnum {
+  String get printMessage {
+    return switch (this) {
+      ClientTransferMoneyEntryMessageEnum.yourAccount => 'Transfer Money to One of Your Account',
+      ClientTransferMoneyEntryMessageEnum.otherUserAccount => 'Transfer Money to Another user Account',
+      ClientTransferMoneyEntryMessageEnum.back => 'back',
+      ClientTransferMoneyEntryMessageEnum.wrongMessage => '',
+    };
+  }
+}

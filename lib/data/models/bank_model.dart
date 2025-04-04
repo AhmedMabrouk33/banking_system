@@ -26,6 +26,29 @@ class BankModel {
 
   // ------------------------- * Model Actions ------------------------------------- //
 
+  // * ------------------------ * Actions for Transfer  -------------------------------------- //
+  Map<String, dynamic> getTransferAccountData({required accountNumber}) {
+    int tmpUserAccountIndex = -1;
+    for (int index = 0; index < _users.length; index++) {
+      if ((index != _selectedUserIndex) && (_users[index] is ClientModel)) {
+        tmpUserAccountIndex = (_users[index] as ClientModel).getInputAccountIndex(accountNumber);
+        if (tmpUserAccountIndex != -1) {
+          return {'userIndex': index, 'accountIndex': accountNumber};
+        }
+      }
+    }
+    return {};
+  }
+
+  void transformAmountMoney({
+    required Map<String, dynamic> transferUserData,
+    required double transferAmount,
+  }) {
+    (_users[transferUserData['userIndex'] ?? -1] as ClientModel).deposit(transferAmount, showBalance: false);
+    
+        
+  }
+
   // * ------------------------ * Save Client Action  -------------------------------------- //
   void saveClientImage(ClientModel clientImageData) {
     if (_selectedUserIndex != null) {

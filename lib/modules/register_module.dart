@@ -11,8 +11,6 @@ import '../core/extensions/custom_string_extension.dart';
 
 import '../core/utils/user_selected_input_conversion.dart';
 
-import '../data/models/admistrator_model.dart';
-import '../data/models/client_model.dart';
 import '../data/universal_data.dart' show isLogged, bankData, userModel;
 
 import './client_module.dart';

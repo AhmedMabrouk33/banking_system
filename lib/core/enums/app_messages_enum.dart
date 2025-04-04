@@ -31,3 +31,10 @@ enum ClientTransactionsEntryMessageEnum {
   logout,
   wrongMessage,
 }
+
+enum ClientTransferMoneyEntryMessageEnum {
+  yourAccount,
+  otherUserAccount,
+  back,
+  wrongMessage,
+}

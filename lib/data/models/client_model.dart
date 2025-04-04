@@ -30,6 +30,10 @@ class ClientModel extends UserModel {
   String get getSelectedAccountBalance =>
       _accounts[selectedAccountIndex].balance.toStringAsFixed(2);
 
+  int getInputAccountIndex(String accountNumber) {
+    return _accounts.indexWhere((e) => e.accountNumber == accountNumber);
+  }
+
   // * --------------------- Display actions --------------------------------------------- //
   bool checkAccountInput(String chosenAccountEntry) {
     int? tmpConvertedChosenAccountEntry = int.tryParse(chosenAccountEntry);
@@ -93,13 +97,23 @@ class ClientModel extends UserModel {
     print('b for back');
   }
 
+  List<String> readAvailableAccountToTransferMoney() {
+    List<String> tmpAvailableAccounts = [];
+    for (int index = 0; index < _accounts.length; index++) {
+      if (_accounts[selectedAccountIndex] != _accounts[index]) {
+        tmpAvailableAccounts = [...tmpAvailableAccounts, _accounts[index].accountNumber];
+      }
+    }
+    return tmpAvailableAccounts;
+  }
+
   bool isNotEmptyBalance() {
     return _accounts[selectedAccountIndex].balance > 0;
   }
 
   // * --------------------- Transactions actions --------------------------------------------- //
 
-  void deposit(double addAmount) {
+  void deposit(double addAmount, {bool showBalance = true}) {
     _accounts[selectedAccountIndex].newBalance =
         _accounts[selectedAccountIndex].balance + addAmount;
     print('Your New balance is ${_accounts[selectedAccountIndex].balance}');
@@ -111,6 +125,20 @@ class ClientModel extends UserModel {
           _accounts[selectedAccountIndex].balance - withDrawAmount;
       print('Your New balance is ${_accounts[selectedAccountIndex].balance}');
       return true;
+    }
+    return false;
+  }
+
+  bool completedTransferAmount({required String transferAccount, required double transferAmount}) {
+    if (transferAmount >= _accounts[selectedAccountIndex].balance) {
+      int transferAccountIndex = _accounts.indexWhere((e) => e.accountNumber == transferAccount);
+      if (transferAccountIndex != -1) {
+        withdraw(transferAmount);
+        _accounts[transferAccountIndex].newBalance =
+            _accounts[transferAccountIndex].balance + transferAmount;
+      } else {
+        return false;
+      }
     }
     return false;
   }
