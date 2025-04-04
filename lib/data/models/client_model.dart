@@ -48,8 +48,11 @@ class ClientModel extends UserModel {
 
   // * --------------------- Display actions --------------------------------------------- //
 
-  void displaySelectedAccountInformation() {
-    print(_accounts[selectedAccountIndex].displayAccountInformation());
+  void displaySelectedAccountInformation({bool isSelectedAccount = true}) {
+    print(
+      (isSelectedAccount ? _accounts[selectedAccountIndex] : _accounts.last)
+          .displayAccountInformation(),
+    );
   }
 
   ///
@@ -88,6 +91,9 @@ class ClientModel extends UserModel {
 
   void createNewAccount({required double amount}) {
     _accounts = [..._accounts, AccountModel(balance: amount)];
+    print('Your new Account is ');
+    print("============================================");
+    displaySelectedAccountInformation(isSelectedAccount: false);
   }
 
   void displayAvailableAccounts() {

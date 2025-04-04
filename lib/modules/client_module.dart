@@ -89,9 +89,7 @@ class ClientModule {
         double? convertedBalance = double.tryParse(userInput);
         if (convertedBalance != null) {
           (userModel as ClientModel).createNewAccount(amount: convertedBalance);
-          print('Your new Account is ');
-          print("============================================");
-          (userModel as ClientModel).displaySelectedAccountInformation();
+          
           bankData.addLog(
             userActionState: UserActionsEnums.createNewAccountAction,
             receiveAccountNumber: null,
